@@ -2,9 +2,7 @@
 
 This repository contains the source for the website "Guidelines for Reporting and Reviewing LLM-Integrated Systems in HCI", which is derived from our work-in-progress paper, "Reporting and Reviewing LLM-Integrated Systems in HCI: Challenges and Recommendations." 
 
-The main file is `llm-hci-guidelines.html`.
-
-To view the site, go to: [https://ianarawjo.com/guidelines-llm-integrated-systems/](https://ianarawjo.com/guidelines-llm-integrated-systems/)
+To view the site, click the GitHub pages link in this repo or visit: [https://ianarawjo.com/guidelines-llm-integrated-systems/](https://ianarawjo.com/guidelines-llm-integrated-systems/)
 
 ### Feedback and Discussion
 
