@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporting and Reviewing LLM-Integrated Systems in HCI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f1e8;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #d4c5a9;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            color: #2c2416;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+        
+        .authors {
+            font-size: 1.1em;
+            color: #5a4a3a;
+            margin-bottom: 15px;
+        }
+        
+        .venue {
+            font-style: italic;
+            color: #7a6a5a;
+            margin-bottom: 20px;
+        }
+        
+        .links {
+            margin-top: 20px;
+        }
+        
+        .links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 8px 20px;
+            background-color: #8b7355;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .links a:hover {
+            background-color: #6d5a43;
+        }
+        
+        .abstract {
+            background-color: #ebe4d5;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 4px solid #8b7355;
+        }
+        
+        .abstract h2 {
+            font-size: 1.3em;
+            color: #2c2416;
+            margin-bottom: 15px;
+        }
+        
+        .abstract p {
+            color: #4a3a2a;
+            text-align: justify;
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            font-size: 1.8em;
+            color: #604a23;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #d4c5a9;
+            font-weight: 400;
+        }
+        
+        .guideline {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .guideline h3 {
+            color: #6d4b6c;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            background-color: #f3e8f7;
+            padding: 12px 18px;
+            border-radius: 6px;
+            margin: -10px -10px 15px -10px;
+        }
+        
+        .guideline-text {
+            color: #4a3a2a;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .example {
+            background-color: #f9f6f0;
+            padding: 15px;
+            border-left: 3px solid #b89968;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #6d5a43;
+            margin-bottom: 8px;
+        }
+        
+        .related-docs {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        
+        .related-docs a {
+            color: #8b7355;
+            text-decoration: none;
+            border-bottom: 1px dotted #8b7355;
+        }
+        
+        .related-docs a:hover {
+            color: #6d5a43;
+            border-bottom: 1px solid #6d5a43;
+        }
+        
+        .note {
+            background-color: #fff9e6;
+            border-left: 4px solid #d4a574;
+            padding: 15px;
+            margin: 30px 0;
+            font-size: 0.95em;
+        }
+        
+        .note strong {
+            color: #8b7355;
+        }
+
+        .ian-experience {
+            background-color: #e8f2d1;
+            border-left: 4px solid #c8c8b5;
+            padding: 12px 15px;
+            margin: 20px 0;
+            font-size: 0.95em;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.2s;
+        }
+        
+        .ian-experience:hover {
+            background-color: #dce8bf;
+        }
+        
+        .ian-experience-title {
+            font-weight: bold;
+            color: #8c8e7d;
+            margin-bottom: 0;
+            user-select: none;
+        }
+        
+        .ian-experience-content {
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            margin-top: 10px;
+            color: #4a3a2a;
+            line-height: 1.5;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .ian-experience:hover .ian-experience-content {
+            display: block;
+            max-height: 500px;
+        }
+        
+        .ian-experience.expanded .ian-experience-content {
+            display: block;
+            max-height: 500px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #d4c5a9;
+            color: #7a6a5a;
+            font-size: 0.9em;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline;
+            font-weight: bold;
+            border-bottom: 2px dotted #8b7355;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 280px;
+            background-color: #2c2416;
+            color: #f5f1e8;
+            text-align: left;
+            border-radius: 6px;
+            padding: 15px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: normal;
+            font-size: 0.9em;
+            line-height: 1.4;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2c2416 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .toc {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .toc h3 {
+            font-size: 1.1em;
+            color: #7a6a5a;
+            margin-bottom: 15px;
+        }
+        
+        .toc ol {
+            line-height: 1.8;
+            color: #450959;
+            padding-left: 25px;
+            margin-left: 0;
+            text-decoration: underline;
+        }
+        
+        .toc a {
+            color: #61165f;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            color: #a516c9;
+            text-decoration: underline;
+        }
+
+        .reviewer-request p {
+            color: #4a3a2a;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .reviewer-request a {
+            color: #8b7355;
+            text-decoration: none;
+            border-bottom: 1px dotted #8b7355;
+        }
+        .reviewer-request a:hover {
+            color: #6d5a43;
+            border-bottom: 1px solid #6d5a43;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .uncertainty-table td {
+            font-size: 0.95em;
+        }
+
+        table th, table td {
+            border: 1px solid #d4c5a9;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table th {
+            background-color: #ebe4d5;
+            color: #604a23;
+            font-weight: bold;
+        }
+
+        table td p {
+            margin: 0;
+        }
+
+        table td a {
+            color: #8b7355;
+            text-decoration: none;
+            border-bottom: 1px dotted #8b7355;
+        }
+
+        table td a:hover {
+            color: #6d5a43;
+            border-bottom: 1px solid #6d5a43;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guidelines for Reporting LLM-Integrated Systems in HCI</h1>
+            <!-- <h2>Reporting Guidelines</h2> -->
+            <div class="authors">Karla Felix Navarro, Eugene Syriani, Ian Arawjo</div>
+            <div class="institution">Department of Computer Science and Operations Research,<br />Université de Montréal, Montréal QC, Canada</div>
+            <div class="venue">Under Review</div>
+            <div class="links">
+                <a href="https://ianarawjo.com/docs/preprint-reporting-llm-integrated-systems-hci.pdf" target="_blank">Paper (pre-print)</a>
+                <a href="#code">Code for site</a>
+            </div>
+        </header>
+
+        <div class="abstract">
+            <h2>About This Work</h2>
+            <p>
+                What guidelines should scholars follow when reporting <span class="tooltip">LLM-integrated systems<span class="tooltiptext">Software systems that query a large language model (LLM) at some point during program execution.</span></span> in HCI? 
+                
+                Distilled from a study with authors and reviewers and refined through additional feedback from 6 expert HCI researchers, we offer the following <strong>eight guidelines</strong> that authors should follow when reporting LLM-integrated systems in HCI research papers. <strong>Authors</strong> can use these guidelines to improve the clarity and rigor of their reporting, while <strong>reviewers</strong> can use them to assess whether papers provide sufficient detail to validate claims involving LLM components.
+
+                <!-- We interviewed 18 HCI scholars about their experiences building, reporting, and reviewing LLM-integrated systems. 
+                We found that the uncertainty of LLMs has eroded traditional trust-building processes between authors and reviewers, 
+                resulting in heightened demands for details and validation. Based on our findings and feedback from six senior HCI 
+                researchers, we present guidelines for authors, reviewers, and the HCI community around reporting and reviewing 
+                papers that involve LLM-integrated systems. -->
+            </p>
+        </div>
+
+        <section id="guidelines">
+            <h2>Guidelines for Reporting LLM-Integrated Systems in HCI</h2>
+
+            <div class="toc">
+                <ol>
+                    <li><a href="#guideline-1">Report prompts and configuration details when they directly affect claimed contributions.</a></li>
+                    <li><a href="#guideline-2">Provide a concrete sense of LLM integration without overwhelming detail.</a></li>
+                    <li><a href="#guideline-3">Conduct a small technical evaluation of LLM components when they are central to claims.</a></li>
+                    <li><a href="#guideline-4">Describe failure modes and limitations of LLM components.</a></li>
+                    <li><a href="#guideline-5">Justify why an LLM is appropriate.</a></li>
+                    <li><a href="#guideline-6">Document the engineering methodology of LLM components.</a></li>
+                    <li><a href="#guideline-7">De-emphasize LLMs/AI in paper framing when not relevant to the contribution.</a></li>
+                    <li><a href="#guideline-8">Consider how future improvements in AI may render some claimed contributions obsolete.</a></li>
+                </ol>
+            </div>
+
+            <div class="note">
+            <strong>Important:</strong> The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines. Papers reporting systems where LLMs are peripheral features (e.g., simple summary 
+            buttons) need not follow all guidelines with equal rigor. The 
+            sensitivity of the topic also mediates rigor (e.g., health).
+        </div>
+
+            <div class="guideline" id="guideline-1">
+                <h3>1. Report prompts and configuration details when they directly affect claimed contributions.</h3>
+                <div class="guideline-text">
+                    Report prompts and technical details that directly affect readers' ability to validate core claims around 
+                    system or user behavior. Include suggestive input-output examples for each reported prompt or LLM component. 
+                    For systems with many prompts, prioritize those essential for understanding and evaluating key claims. Non-critical 
+                    components (e.g., a text summarization button) need not be exhaustively documented; however, it should be noted 
+                    that these components were straightforward to engineer. Always report exact model name and version.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    "Our system uses GPT-4 (gpt-4-0613) at default settings to generate conflict resolution feedback. The prompt template operationalizes Fisher and Ury's principled negotiation framework, and is structured as follows: <em>'Given the following conflict scenario and conversation history, identify: (1) the parties' interests vs. positions, (2) objective criteria that could resolve the dispute, and (3) a mutually beneficial option. Respond in 2-3 sentences appropriate for an undergraduate student. Scenario: {scenario} Conversation history: {history}'</em> Appendix A provides the full prompt alongside an example input and output."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        Fairly uncontroversial, yet the most commonly violated guideline in my reviewing experience, and easily fixable. One note here is that, we found you don't need to report every single prompt in the system, just the ones that are central to claims. Experienced developers are satisfied with notes that "other prompts were straightforward and used default settings."
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-2">
+                <h3>2. Provide a concrete sense of LLM integration without overwhelming detail.</h3>
+                <div class="guideline-text">
+                    Provide readers with a concrete understanding of how each LLM component interacts with other system components. 
+                    Use representative input-output examples or prompt sketches that give readers a concrete sense of LLM component 
+                    design, input format, and output behavior, in relation to its integration in the larger system. These may be presented concisely in data-flow diagrams or tables, with further details like exact prompts relegated to an appendix or supplementary material.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    Create a system architecture diagram showing how user input flows through your interface, gets processed by the 
+                    LLM, and returns to the user. Include a truncated example like: <em>Input: "User query: ..." → Prompt template X with Y inputs to LLM → Output: "It is clear that the..."</em>
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        Tricky to get right in limited space, but effective when done well. Reviewers expect to see the "big picture" of how LLM components fit into the overall system architecture, in the main text and not an appendix, but don't want to be overwhelmed with minutiae.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-3">
+                <h3>3. Conduct a small technical evaluation of LLM components when they are central to claims.</h3>
+                <div class="guideline-text">
+                    LLMs are stochastic and never 100% correct. When an LLM component is integral to claims, authors should perform a small technical evaluation of the LLM component on a dataset of representative inputs, <i>outside of a user study</i>, to provide insight into the robustness and 
+                    generalizability of its behavior. In most cases, 
+                    datasets should be custom-tailored to the use case and smaller than benchmarks (e.g., 30-100 samples could be 
+                    appropriate), consistent with the notion of "evals" in LLM-integrated software engineering. Metrics can either be automated, expert ratings, or both. Unlike ML/NLP, the aim is to provide a sanity check that contextualizes the LLM component's robustness without the confounders of a user study, not to rigorously benchmark model behavior. 
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    "We evaluated our LLM-generated feedback on 50 representative student qualitative coding excerpts from prior studies. Two expert qualitative researchers independently rated each piece of feedback on accuracy (Cohen's κ=0.78) and actionability (κ=0.82). The system achieved 86% accuracy (43/50 cases) and provided actionable suggestions in 92% of cases (46/50). Common failure modes included overgeneralizing from limited context (6 cases) and paraphrasing codes already present (4 cases)."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        This is the biggest difference for authors used to writing traditional HCI system papers without ML components. Reviewers now expect some form of technical evaluation of LLM components, especially when they are central to the claims. We have personally experienced reviewers demanding this (e.g., for our paper ChainBuddy, CHI 2025). In my experience, a small-scale evaluation with 30-100 representative inputs, evaluated with automated metrics or expert ratings, is usually sufficient to satisfy reviewer skepticism and ground performance claims.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-4">
+                <h3>4. Describe failure modes and limitations of LLM components.</h3>
+                <div class="guideline-text">
+                    Briefly report errors, biases, or limitations of LLM components in the system. Summarize these failure modes 
+                    qualitatively, providing concrete examples by ideally drawing on results from a technical evaluation. As LLMs 
+                    are stochastic, they can always err for some inputs; thus, avoid making sweeping claims of positive performance 
+                    that imply the system is infallible. Reporting failure modes clarifies system reliability, provides transparency 
+                    about the boundary conditions of claims, and aligns with ongoing efforts to provide transparency on potential 
+                    negative impacts.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    "We observed that the system occasionally generates overly formal language that participants found stilted. In 8% of our test cases (4/50 inputs), the LLM also failed to correctly interpret the domain-specific meaning of terms, requiring 
+                    users to rephrase their queries."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        So many submitted papers don't do this, and it's a big red flag that can sink a paper outright. In papers I have reviewed, authors can make sweeping claims like "our system provides accurate feedback" or "our component understands user intent for XYZ types of users" without any evidence backing their claims. Perhaps the fault is double-barreled: on the one hand, we know AI tends to make authors overconfident in their system's capabilities, so authors might be prone to this too. On the other, rhetoric around AI has become so hype-laden that authors might adopt similar language without realizing they are no longer on social media. 
+                        Being upfront about limitations and failure modes not only builds trust with reviewers but also demonstrates a mature, humble understanding of technology's capabilities.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-5">
+                <h3>5. Justify why an LLM is appropriate.</h3>
+                <div class="guideline-text">
+                    Briefly justify the choice to use an LLM in the system, compared to alternative technical approaches for the 
+                    same purpose. This justification can remain speculative and persuasive (i.e., in most cases, there is no need 
+                    to compare to alternative methods like decision trees, trained classifiers, etc.). Note that this guideline 
+                    refers to language models in general, rather than a specific model. While authors may also justify choosing a 
+                    specific model, for the vast majority of HCI work, justifying model selection is not required—"it 
+                    worked well enough for our prototype" or "we had credits with this provider" can be justifications enough.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    "We chose an LLM approach because our system needed to handle open-ended user queries and generate contextually 
+                    appropriate responses in natural language—capabilities difficult to achieve with rule-based systems or traditional 
+                    classifiers."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        Many participants and senior researchers emphasized this guideline. 
+                        I also take this recommendation to mean authors should situate their work inside a broader landscape and history of technical approaches to the problem at hand. "AI" isn't a magic word that magically sets a system apart from all prior art. While it would be impractical to expect authors to compare their LLM approach to every possible alternative, authors should at least acknowledge prior approaches and explain why an LLM is a suitable choice for their specific use case.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-6">
+                <h3>6. Document the engineering methodology of LLM components.</h3>
+                <div class="guideline-text">
+                    Include a short "engineering methodology" subsection near system implementation, describing how LLM components 
+                    were developed and refined. Explain design choices and the iterative process used for prompt and architecture 
+                    development. This practice parallels how HCI papers document qualitative data analysis methods, provides clarity on the effort and care that went into building the system (as it cannot be deduced by reading the final chosen prompt), and provides insights for developers seeking to replicate or build upon the work.
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    "We iteratively refined our prompts through three stages: (1) exploratory testing with 15 example inputs from 
+                    our formative study, (2) team-based review where three researchers independently evaluated outputs and discussed 
+                    failure modes, and (3) validation with five domain experts who provided feedback on appropriateness and accuracy."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        Reviewers in our study appreciated some insight into how authors engineered their LLM components—was it "thoughtful"? Or was it slapped together? Including a brief description of the iterative process authors used to refine prompts and system architecture helps reviewers understand the effort behind LLM component design. This also should cause authors to reflect on whether they're adopting iterative design practices and seriously engaging with the LLM's behavior, rather than just throwing something together for a paper.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-7">
+                <h3>7. De-emphasize LLMs/AI in paper framing when not relevant to the contribution.</h3>
+                <div class="guideline-text">
+                    If LLMs are not central to the contribution, but only an enabling implementation detail, consider 
+                    de-emphasizing the terms LLM/AI in the title, abstract, and introduction. Overemphasis can contribute to 
+                    "AI fatigue" and distort the paper's primary contribution. The exception is when the research directly advances the 
+                    understanding of LLMs themselves (e.g., prompt engineering tools).
+                </div>
+                <div class="example">
+                    <div class="example-title">Example:</div>
+                    Remove LLM term from title: "FoodChainer: An <span style="text-decoration: line-through;">LLM-powered</span> Mobile Game for Teaching Ecosystem Dynamics"
+                   <br> Remove AI term from abstract: "We present FoodChainer, a mobile game that uses an LLM to generate dynamic food webs based on user input. <span style="text-decoration: line-through;">By leveraging AI,</span> the game engages users in learning about ecosystem interactions through interactive storytelling."
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        Very surprising guideline, but makes sense. At UIST 2025, over 1 in 3 papers reported an LLM-integrated system. At this point, noting a system is "LLM-based" and "AI-powered" is simply redundant: it's increasingly <i>expected</i> that systems will at some point query an LLM. Papers that overemphasize AI/LLMs when they are not central can also come across as trying too hard to ride AI hype, which can backfire with reviewers.
+                    </div>
+                </div>
+            </div>
+
+            <div class="guideline" id="guideline-8">
+                <h3>8. Consider how future improvements in AI may render some claimed contributions obsolete.</h3>
+                <div class="guideline-text">
+                    How "future-proof" is the research? Consider whether claimed contributions would still be relevant in the near 
+                    future, when AI models improve. Although speculative, this is especially relevant for claims of novel technical 
+                    contributions with complex architectures. In our study, authors employed three framing strategies to help future-proof their research: 1) centering a 
+                    novel interaction design/paradigm as their chief contribution, 2) framing systems as probes to generate insights 
+                    into user behavior, and 3) tackling a niche problem domain that has received considerably less attention.
+                </div>
+                <div class="ian-experience">
+                    <div class="ian-experience-title">Ian's Comment   </div>
+                    <div class="ian-experience-content">
+                        This is also a note about paper framing. While you <i>can</i> claim a technical contribution in LLM-integrated work, in my experience that is not an effective strategy, since the spectre of "LLMs will get better soon" looms in reviewers' minds. Researchers tolds us they framed their systems as "probes" instead, or prototypes of novel interaction paradigms—deliberately avoiding claims of technical novelty. 
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviewer-requests">
+            <h2>Some Example "Reviewer Thoughts" and How the Guidelines Address Them</h2>
+            <table class="reviewer-table">
+                <thead>
+                    <tr>
+                        <th>Reviewer Thought</th>
+                        <th>Relevant Guidelines</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Where are the prompts used? I can't get a sense of how it works."</td>
+                        <td><a href="#guideline-1">G1: Report prompts that affect core claims</a></td>
+                    </tr>
+                    <tr>
+                        <td>"Why does this system need an LLM at all? There's prior work that addresses this issue without an LLM."</td>
+                        <td><a href="#guideline-5">G5: Justify LLM use</a></td>
+                    </tr>
+                    <tr>
+                        <td>"I don't understand what the LLM is actually doing in this system. It seems like it's doing a lot of the heavy-lifting."</td>
+                        <td><a href="#guideline-2">G2: Concrete sense of integration</a>, <a href="#guideline-1">G1: Report prompts that affect core claims</a></td>
+                    </tr>
+                    <tr>
+                        <td>"The authors say they refined their LLM pipeline to be good at X, but how? Should I just take their word for it?"</td>
+                        <td><a href="#guideline-3">G3: Technical evaluation</a>, <a href="#guideline-6">G6: Engineering methodology</a></td>
+                    </tr>
+                    <tr>
+                        <td>"Authors could be cherrypicking the moments that it worked. They only show one task in the screenshots, yet claim it generalizes across many tasks and users."</td>
+                        <td><a href="#guideline-3">G3: Technical evaluation</a>, <a href="#guideline-4">G4: Failure modes</a></td>
+                    </tr>
+                    <tr>
+                        <td>"This agent architecture is very complex, I'm not sure whether all these LLM components were necessary to improve performance."</td>
+                        <td><a href="#guideline-3">G3: Technical evaluation</a> (here, an ablation study)</td>
+                    </tr>
+                    <tr>
+                        <td>"This feels like an LLM wrapper."</td>
+                        <td><a href="#guideline-7">G7: De-emphasize LLMs in framing</a>, <a href="#guideline-8">G8: Future-proof contributions</a>, <a href="#guideline-6">G6: Engineering methodology</a></td>
+                    </tr>
+                    <tr>
+                        <td>"Did the authors just throw this together? It's unclear how much thought went into building this."</td>
+                        <td><a href="#guideline-6">G6: Engineering methodology</a></td>
+                    </tr>
+                    <tr>
+                        <td>"12 study participants liked the system... OK. But they may be biased to liking an AI approach more than a non-AI one, not be experienced enough to tell when the AI is wrong, or just want to appease the researchers. How can we know the system really performs well?"</td>
+                        <td><a href="#guideline-3">G3: Technical evaluation</a></td>
+                    </tr>
+                    <tr>
+                        <td>"This complex technical architecture won't matter once models get better."</td>
+                        <td><a href="#guideline-8">G8: Future-proof contributions</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- <section id="trust-table">
+            <h2>Dimensions of How LLM Uncertainty Erodes Trust</h2>
+            <p>The unique challenges of LLM-integrated systems stem from the uncertainty of LLM behavior. This uncertainty erodes trust, whether for authors in faith in their own system, or for reviewers in assessing system capabilities and author credibility. </p>
+            <table class="uncertainty-table">
+                <thead>
+                    <tr>
+                    <th>Uncertainty about…</th>
+                    <th>Strategies to build trust</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td colspan="2"><strong>Role:</strong> <em>Builder</em></td>
+                    </tr>
+                    <tr>
+                    <td>Whether LLMs can accomplish the task</td>
+                    <td>
+                        Rapid ad hoc testing of prompts and models, trying varied prompting strategies
+                        or pipelines early on.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Model selection</td>
+                    <td>
+                        Compare models in initial trials, considering latency, cost, resource access,
+                        UX goals, reproducibility, and ethics.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>How to prompt effectively</td>
+                    <td>
+                        Experiment with multiple prompting strategies rather than fixating on one.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Evaluation criteria</td>
+                    <td>
+                        Develop evaluation rubrics through iterative reflection; ask team members or
+                        domain stakeholders to annotate outputs.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Context to include and how</td>
+                    <td>
+                        Test different amounts and types of context to compare performance.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Robustness</td>
+                    <td>
+                        Create datasets of diverse inputs representative of the task domain and
+                        evaluate LLM outputs.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Real-world use (e.g., open user prompts)</td>
+                    <td>
+                        Conduct human validation studies with domain experts or target users before
+                        launching user studies.
+                    </td>
+                    </tr>
+
+                    <tr>
+                    <td colspan="2"><strong>Role:</strong> <em>Author</em></td>
+                    </tr>
+                    <tr>
+                    <td>How much details to report around the LLM component</td>
+                    <td>
+                        Report only details critical for understanding/evaluating contributions; use
+                        appendices, supplementary materials, or code releases to extend transparency.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Reviewer expectations around types of evaluation required</td>
+                    <td>
+                        Add technical evaluations or pre-study validations to satisfy technical
+                        reviewers; provide extensive details and justifications to address skeptical
+                        reviewers.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Reviewers’ idiosyncratic positions regarding the use of LLMs</td>
+                    <td>
+                        Explicitly discuss ethical risks and societal ramifications, especially in
+                        sensitive domains; choose topics and framings carefully; encourage venues to
+                        set clearer guidelines for LLM paper evaluation.
+                    </td>
+                    </tr>
+
+                    <tr>
+                    <td colspan="2"><strong>Role:</strong> <em>Reviewer</em></td>
+                    </tr>
+                    <tr>
+                    <td>Author’s level of rigor in engineering the system</td>
+                    <td>
+                        Authors can informally report their prompt/LLM component engineering process,
+                        noting alternative models or strategies tested to contextualize design
+                        decisions.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Why authors chose to use LLMs</td>
+                    <td>
+                        Authors can justify LLM use in relation to design goals, and de-emphasize
+                        LLM/AI in the title/abstract/intro if it is not the primary contribution.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Author’s awareness of LLM pitfalls and their mitigation strategies</td>
+                    <td>
+                        Authors can explicitly describe LLM limitations and include illustrative
+                        examples of system errors.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>How the LLM components integrate inside the system</td>
+                    <td>
+                        Provide an end-to-end system workflow diagram with truncated input/output
+                        examples; report prompts central to claimed contributions.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Representativeness of authors’ examples of system behavior</td>
+                    <td>
+                        Authors can include examples derived from user studies and/or small-scale
+                        technical evaluations across representative inputs.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                        Robustness and generalization beyond the provided evaluation or examples
+                    </td>
+                    <td>
+                        Authors can include technical evaluations across representative datasets (via
+                        human raters or automated metrics).
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                        What parts of technical architecture contributed to positive performance
+                    </td>
+                    <td>
+                        Authors can run ablation studies to identify which components contribute to
+                        performance, if claiming a technical contribution.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                        Whether participants’ positive responses in a usability study can be trusted
+                    </td>
+                    <td>
+                        Authors can compare against AI-powered baselines to address potential AI
+                        placebo effects; include technical or field evaluations beyond usability
+                        studies.
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                        Whether technical approach will remain relevant after future AI advancements
+                    </td>
+                    <td>
+                        Authors can frame contributions around interaction design or insights into
+                        user behavior (e.g., design as probe).
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section> -->
+
+        <section id="exemplars">
+            <h2>Exemplar Papers</h2>
+            <p style="margin-bottom: 20px; color: #4a3a2a;">
+                The following papers demonstrate good practices for reporting LLM-integrated systems in HCI and follow the majority of the guidelines presented above:
+            </p>
+            <ul style="list-style-position: inside; color: #4a3a2a; line-height: 2; margin-bottom: 20px;">
+                <li><a href="#" style="color: #8b7355;">Rehearsal: Simulating Conflict to Teach Conflict Resolution (CHI 2024)</a></li>
+                <li><a href="#" style="color: #8b7355;">BloomIntent: Automating Search Evaluation with LLM-Generated User Intents (UIST 2025)</a></li>
+                <li><a href="#" style="color: #8b7355;">EvAlignUX: Advancing UX Evaluation Through LLM-Supported Metrics Exploration (CHI 2025)</a></li>
+                <li><a href="#" style="color: #8b7355;">GUM: Creating General User Models from Computer Use (UIST 2025)</a></li>
+                <li><a href="#" style="color: #8b7355;">ChainBuddy: An AI-Assisted Agent System for Generating LLM Pipelines (CHI 2025)</a></li>
+                <li><a href="#" style="color: #8b7355;">InstructPipe: Generating Visual Blocks Pipelines with Human Instructions and LLMs (CHI 2025)</a></li>
+            </ul>
+            <p> Feel free to propose more by submitting a PR to our <a href="#" style="color: #8b7355;">GitHub repository</a>! </p>
+        </section>
+
+        <section id="llm-wrapper">
+            <h2>What Does "LLM Wrapper" Mean?</h2>
+            <p style="margin-bottom: 20px; color: #4a3a2a;">
+                The term "LLM wrapper" is often used pejoratively by reviewers. Our interviewees gave varied, often contradictory definitions. However, some common dimensions were:  
+            </p>
+            
+            <ul style="list-style-position: inside; color: #4a3a2a; line-height: 2; margin-bottom: 20px;">
+                <li>A system that appears trivial to build</li>
+                <li>A paper whose primary contribution is "an LLM solved X problem"</li>
+                <li>An interface or interaction that closely resembles a chatbot UI like ChatGPT</li>
+                <li>A paper where you don't learn anything new</li>
+                <li>A paper that doesn't engage in past HCI literature, especially previous to the current AI era</li>
+            </ul>
+
+            <p>We recommend that reviewers avoid using "LLM wrapper" in formal reviews since its meaning is highly subjective.</p>
+
+            <div class="note" style="margin-top: 30px;">
+                <strong>For Authors:</strong> To avoid some of this stigma, position your work well in pre-LLM-era HCI literature and frame your contributions around insights, design principles, or user understanding rather than technical novelty. Follow the guidelines above—especially de-emphasizing LLM/AI in framing when appropriate (Guideline 7)—to demonstrate substantive contribution. Consider what the reader learns from your work beyond "you can use an LLM to address X problem."</br>
+            </div>
+        </section>
+
+        <section id="citation">
+            <h2>Citation</h2>
+            <p style="margin-bottom: 10px;">
+                If you find these guidelines useful, please cite our paper:
+            </p>
+            <div style="background-color: white; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 0.9em;">
+                @unpublished{navarro2025reportingllm,<br>
+                &nbsp;&nbsp;title={Reporting and Reviewing LLM-Integrated Systems in HCI: Challenges and Recommendations},<br>
+                &nbsp;&nbsp;author={Felix Navarro, Karla and Syriani, Eugene and Arawjo, Ian},<br>
+                &nbsp;&nbsp;year={2025}<br>
+                }
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact and Feedback</h2>
+            <p style="color: #4a3a2a;">
+                We welcome community feedback. For comments, suggestions, or other feedback, please raise a Discussion or PR on our <a href="#" style="color: #8b7355;">GitHub repository</a>. These guidelines were our best shot at distilling current best practices from a need-finding study with 18 "users" (authors and reviewers of such papers), iterated with six senior HCI researchers.
+
+                Our paper also includes common pitfalls for reviewers of LLM-integrated systems, and suggestions for HCI communities, which we ommitted here for now. Please see the full paper for those details.
+            </p>
+        </section>
+
+        <section id="acknowledgments">
+            <h2>Acknowledgments</h2>
+            <p style="color: #4a3a2a;">
+                We thank the 18 HCI researchers who participated in our interviews and the six expert HCI researchers who provided valuable feedback on our guidelines.
+            </p>
+        </section>
+
+        <footer>
+            <!-- <p>Based on interviews with 18 HCI scholars and feedback from 6 senior researchers with 15+ years experience each.</p> -->
+            <p style="margin-top: 10px;">Last updated: December 2025</p>
+        </footer>
+    </div>
+    <script>
+        // Add click functionality to ian-experience sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const ianExperiences = document.querySelectorAll('.ian-experience');
+            
+            ianExperiences.forEach(function(element) {
+                element.addEventListener('click', function(e) {
+                    // Toggle expanded class on click
+                    this.classList.toggle('expanded');
+                    e.stopPropagation();
+                });
+            });
+            
+            // Close expanded sections when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.ian-experience')) {
+                    ianExperiences.forEach(function(element) {
+                        element.classList.remove('expanded');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
