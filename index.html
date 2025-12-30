@@ -111,6 +111,7 @@
         
         .guideline h3 {
             color: #6d4b6c;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             font-size: 1.2em;
             margin-bottom: 15px;
             background-color: #f3e8f7;
@@ -280,14 +281,15 @@
         
         .toc ol {
             line-height: 1.8;
-            color: #450959;
+            color: #2c2c2c;
             padding-left: 25px;
             margin-left: 0;
-            text-decoration: underline;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 11pt;
         }
         
         .toc a {
-            color: #61165f;
+            color: #232323;
             text-decoration: none;
         }
         
@@ -383,11 +385,15 @@
         <section id="guidelines">
             <h2>Guidelines for Reporting LLM-Integrated Systems in HCI</h2>
 
+            <p style="margin-bottom: 12pt;">
+                As an author, the central problem of reporting an LLM-integrated system is cultivating <strong>trust</strong> with reviewers who have imperfect information on the quality of your system and development process. The uncertainty of LLMs erodes trust between authors and reviewers compared to previous norms followed for traditional, code-based systems. Thus, HCI authors must do more reporting work than they are used to for this paper type. The following guidelines summarize the specific components that your reporting should include, to repair trust in the face of LLM uncertainty:
+            </p>
+
             <div class="toc">
                 <ol>
-                    <li><a href="#guideline-1">Report prompts and configuration details when they directly affect claimed contributions.</a></li>
+                    <li><a href="#guideline-1">Report prompts and configuration details that directly affect claimed contributions.</a></li>
                     <li><a href="#guideline-2">Provide a concrete sense of LLM integration without overwhelming detail.</a></li>
-                    <li><a href="#guideline-3">Conduct a small technical evaluation of LLM components when they are central to claims.</a></li>
+                    <li><a href="#guideline-3">Conduct a small technical evaluation of LLM components that are central to claims.</a></li>
                     <li><a href="#guideline-4">Describe failure modes and limitations of LLM components.</a></li>
                     <li><a href="#guideline-5">Justify why an LLM is appropriate.</a></li>
                     <li><a href="#guideline-6">Document the engineering methodology of LLM components.</a></li>
@@ -396,14 +402,21 @@
                 </ol>
             </div>
 
-            <div class="note">
+            <p style="margin-bottom: 12pt;">
+                An essential difference is the reporting of technical evaluations (i.e., outside user studies), which nearly all of our participants stated was <em>expected</em> when LLM components are central to contributions. This is a departure from traditional HCI system papers without ML components, where user studies often suffice to validate system claims. Authors should avoid optimistic statements like "our system already has good performance, so we proceeded to a user study..." that cannot be validated by reviewers unless specific evidence is provided.
+            </p>
+            <p>
+                In what follows, we break down these guidelines in more detail.
+            </p>
+
+        <div class="note">
             <strong>Important:</strong> The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines. Papers reporting systems where LLMs are peripheral features (e.g., simple summary 
             buttons) need not follow all guidelines with equal rigor. The 
             sensitivity of the topic also mediates rigor (e.g., health).
         </div>
 
             <div class="guideline" id="guideline-1">
-                <h3>1. Report prompts and configuration details when they directly affect claimed contributions.</h3>
+                <h3>1. Report prompts and configuration details that directly affect claimed contributions.</h3>
                 <div class="guideline-text">
                     Report prompts and technical details that directly affect readers' ability to validate core claims around 
                     system or user behavior. Include suggestive input-output examples for each reported prompt or LLM component. 
@@ -444,7 +457,7 @@
             </div>
 
             <div class="guideline" id="guideline-3">
-                <h3>3. Conduct a small technical evaluation of LLM components when they are central to claims.</h3>
+                <h3>3. Conduct a small technical evaluation of LLM components that are central to claims.</h3>
                 <div class="guideline-text">
                     LLMs are stochastic and never 100% correct. When an LLM component is integral to claims, authors should perform a small technical evaluation of the LLM component on a dataset of representative inputs, <i>outside of a user study</i>, to provide insight into the robustness and 
                     generalizability of its behavior. In most cases, 
