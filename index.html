@@ -272,6 +272,10 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        .intro p {
+            margin-bottom: 12pt;
+        }
         
         .toc h3 {
             font-size: 1.1em;
@@ -385,35 +389,31 @@
         <section id="guidelines">
             <h2>Guidelines for Reporting LLM-Integrated Systems in HCI</h2>
 
-            <p style="margin-bottom: 12pt;">
-                As an author, the central problem of reporting an LLM-integrated system is cultivating <strong>trust</strong> with reviewers who have imperfect information on the quality of your system and development process. The uncertainty of LLMs erodes trust between authors and reviewers compared to previous norms followed for traditional, code-based systems. Thus, HCI authors must do more reporting work than they are used to for this paper type. The following guidelines summarize the specific components that your reporting should include, to repair trust in the face of LLM uncertainty:
-            </p>
+            <div class="intro">
+                <p>
+                    As an author, the central problem of reporting an LLM-integrated system is cultivating <strong>trust</strong> with reviewers who have imperfect information on the quality of your system and development process. The uncertainty of LLMs erodes trust between authors and reviewers compared to previous norms followed for traditional, code-based systems. Thus, HCI authors must do more reporting work than they are used to for this paper type. The following guidelines summarize the specific components that your reporting should include, to repair trust in the face of LLM uncertainty:
+                </p>
 
-            <div class="toc">
-                <ol>
-                    <li><a href="#guideline-1">Report prompts and configuration details that directly affect claimed contributions.</a></li>
-                    <li><a href="#guideline-2">Provide a concrete sense of LLM integration without overwhelming detail.</a></li>
-                    <li><a href="#guideline-3">Conduct a small technical evaluation of LLM components that are central to claims.</a></li>
-                    <li><a href="#guideline-4">Describe failure modes and limitations of LLM components.</a></li>
-                    <li><a href="#guideline-5">Justify why an LLM is appropriate.</a></li>
-                    <li><a href="#guideline-6">Document the engineering methodology of LLM components.</a></li>
-                    <li><a href="#guideline-7">De-emphasize LLMs/AI in paper framing when not relevant to the contribution.</a></li>
-                    <li><a href="#guideline-8">Consider how future improvements in AI may render some claimed contributions obsolete.</a></li>
-                </ol>
+                <div class="toc">
+                    <ol>
+                        <li><a href="#guideline-1">Report prompts and configuration details that directly affect claimed contributions.</a></li>
+                        <li><a href="#guideline-2">Provide a concrete sense of LLM integration without overwhelming detail.</a></li>
+                        <li><a href="#guideline-3">Conduct a small technical evaluation of LLM components that are central to claims.</a></li>
+                        <li><a href="#guideline-4">Describe failure modes and limitations of LLM components.</a></li>
+                        <li><a href="#guideline-5">Justify why an LLM is appropriate.</a></li>
+                        <li><a href="#guideline-6">Document the engineering methodology of LLM components.</a></li>
+                        <li><a href="#guideline-7">De-emphasize LLMs/AI in paper framing when not relevant to the contribution.</a></li>
+                        <li><a href="#guideline-8">Consider how future improvements in AI may render some claimed contributions obsolete.</a></li>
+                    </ol>
+                </div>
+
+                <p>
+                    An essential difference is the reporting of technical evaluations (i.e., outside user studies), which nearly all of our participants stated was <em>expected</em> when LLM components are central to contributions. This is a departure from traditional HCI system papers without ML components, where user studies often suffice to validate system claims. Authors should avoid optimistic statements like "our system already has good performance, so we proceeded to a user study..." that cannot be validated by reviewers unless specific evidence is provided.
+                </p>
+                <p style="margin-bottom: 20pt;">
+                    <strong>The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines.</strong> Papers reporting systems where LLMs are peripheral features (e.g., simple summary buttons) need not follow all guidelines with equal rigor. The sensitivity of the topic also mediates rigor (e.g., health). In what follows, we break down these guidelines in more detail.
+                </p>
             </div>
-
-            <p style="margin-bottom: 12pt;">
-                An essential difference is the reporting of technical evaluations (i.e., outside user studies), which nearly all of our participants stated was <em>expected</em> when LLM components are central to contributions. This is a departure from traditional HCI system papers without ML components, where user studies often suffice to validate system claims. Authors should avoid optimistic statements like "our system already has good performance, so we proceeded to a user study..." that cannot be validated by reviewers unless specific evidence is provided.
-            </p>
-            <p>
-                In what follows, we break down these guidelines in more detail.
-            </p>
-
-        <div class="note">
-            <strong>Important:</strong> The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines. Papers reporting systems where LLMs are peripheral features (e.g., simple summary 
-            buttons) need not follow all guidelines with equal rigor. The 
-            sensitivity of the topic also mediates rigor (e.g., health).
-        </div>
 
             <div class="guideline" id="guideline-1">
                 <h3>1. Report prompts and configuration details that directly affect claimed contributions.</h3>
