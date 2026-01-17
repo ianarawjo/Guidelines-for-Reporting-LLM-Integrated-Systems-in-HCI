@@ -107,6 +107,7 @@
             margin-bottom: 25px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
         }
         
         .guideline h3 {
@@ -132,6 +133,38 @@
             border-left: 3px solid #d4a574;
             margin: 15px 0;
             font-size: 0.95em;
+
+            /* collapsed by default to save space; expand on hover or focus */
+            max-height: 48px; /* shows title + a little padding */
+            overflow: hidden;
+            transition: max-height 0.28s ease, box-shadow 0.18s ease;
+            position: relative;
+        }
+
+        /* expand when hovered or focused (keyboard accessibility via focus-within)
+           large max-height used to allow full content to show; not perfect but practical */
+        .example:hover,
+        .example:focus-within {
+            max-height: 1200px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+
+        /* subtle gradient hint when collapsed to indicate more content */
+        .example::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 36px;
+            background: linear-gradient(180deg, rgba(255,249,230,0) 0%, #fff9e6 100%);
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+        }
+
+        .example:hover::after,
+        .example:focus-within::after {
+            opacity: 0;
         }
         
         .example-title {
@@ -168,47 +201,80 @@
             color: #8b7355;
         }
 
+        /* Right-side comment icon that shows the comment on hover as a tooltip */
         .ian-experience {
-            background-color: #f0f9f6;
-            border-left: 4px solid #68b89a;
-            padding: 12px 15px;
-            margin: 20px 0;
-            font-size: 0.95em;
-            border-radius: 4px;
+            position: absolute;
+            top: 16px;
+            left: calc(100% + 12px); /* place in the right margin just outside the guideline/container */
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: rgba(139,115,85,0.06);
+            border: 1px solid rgba(139,115,85,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            position: relative;
-            transition: background-color 0.2s;
+            padding: 0;
+            z-index: 2;
         }
-        
-        .ian-experience:hover {
-            background-color: #e0f3ed;
+
+        .ian-experience::before {
+            content: "?";
+            font-weight: 700;
+            color: #6d5a43;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 14px;
+            line-height: 1;
         }
-        
+
+        /* hide the inline title to keep only the icon visible */
         .ian-experience-title {
-            font-weight: bold;
-            color: #5a8a75;
-            margin-bottom: 0;
-            user-select: none;
-        }
-        
-        .ian-experience-content {
             display: none;
-            max-height: 0;
-            overflow: hidden;
-            margin-top: 10px;
-            color: #4a3a2a;
-            line-height: 1.5;
-            transition: max-height 0.3s ease-out;
         }
-        
+
+        /* Tooltip content that appears on hover */
+        .ian-experience-content {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateX(calc(-100% - 12px)) translateY(-50%); /* position to the left of the icon, overlapping the guideline */
+            width: 320px;
+            background-color: #2c2416;
+            color: #f5f1e8;
+            padding: 12px 14px;
+            border-radius: 6px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.18s ease, visibility 0.18s;
+            z-index: 3;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        /* Name label inside the content */
+        .ian-name {
+            color: #7fe87a; /* spring-like green, slightly yellower */
+            font-weight: 700;
+            margin-right: 2px;
+            display: inline-block;
+        }
+
+        .ian-experience-content::after {
+            content: "";
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent transparent #2c2416; /* arrow pointing right toward the icon */
+        }
+
         .ian-experience:hover .ian-experience-content {
-            display: block;
-            max-height: 500px;
-        }
-        
-        .ian-experience.expanded .ian-experience-content {
-            display: block;
-            max-height: 500px;
+            visibility: visible;
+            opacity: 1;
         }
         
         footer {
@@ -376,7 +442,7 @@
             <p>
                 What guidelines should scholars follow when reporting <span class="tooltip">LLM-integrated systems<span class="tooltiptext">Software systems that query a large language model (LLM) at some point during program execution.</span></span> in HCI? 
                 
-                Distilled from a study with authors and reviewers and refined through additional feedback from 6 expert HCI researchers, we offer the following <strong>eight guidelines</strong> that authors should follow when reporting LLM-integrated systems in HCI research papers. <strong>Authors</strong> can use these guidelines to improve the clarity and rigor of their reporting, while <strong>reviewers</strong> can use them to assess whether papers provide sufficient detail to validate claims involving LLM components.
+                Distilled from a study with 18 authors and reviewers and refined through additional feedback from 6 expert HCI researchers, we offer the following <strong>eight guidelines</strong> that authors should follow when reporting LLM-integrated systems in HCI research papers. <strong>Authors</strong> can use these guidelines to improve the clarity and rigor of their reporting, while <strong>reviewers</strong> can use them to assess whether papers provide sufficient detail to validate claims involving LLM components.
 
                 <!-- We interviewed 18 HCI scholars about their experiences building, reporting, and reviewing LLM-integrated systems. 
                 We found that the uncertainty of LLMs has eroded traditional trust-building processes between authors and reviewers, 
@@ -391,7 +457,7 @@
 
             <div class="intro">
                 <p>
-                    As an author, the central problem of reporting an LLM-integrated system is cultivating <strong>trust</strong> with reviewers who have imperfect information on the quality of your system and development process. The uncertainty of LLMs erodes trust between authors and reviewers well beyond previous trust-building required for traditional, code-based systems. Thus, HCI authors must do more reporting work than they are used to. The following guidelines summarize the specific components that your reporting should include, to repair trust in the face of LLM uncertainty:
+                    As an author, the central problem of reporting an LLM-integrated system is cultivating <strong>trust</strong> with reviewers who have imperfect information on the quality of your system and development process. While trust-building was always important, LLMs make it significantly harder due to their unpredictability and variability. In response, authors must typically do more work, both in validating their system, and in reporting details to reviewers. The following guidelines summarize the specific components that your reporting should include, to repair trust in the face of LLM uncertainty:
                 </p>
 
                 <div class="toc">
@@ -415,10 +481,10 @@
                 </div>
 
                 <p>
-                    An essential difference is the reporting of technical evaluations (i.e., outside user studies), which nearly all of our participants stated was <em>expected</em> when LLM components are central to contributions. This is a departure from traditional HCI system papers without ML components, where user studies often suffice to validate system claims. Authors should avoid optimistic statements like "our system already has good performance, so we proceeded to a user study..." that cannot be validated by reviewers unless specific evidence is provided.
+                    Authors might use these guidelines to improve the quality of their reporting, while reviewers can use them to calibrate expectations. Compared to previous HCI norms for systems papers, one essential difference is the reporting of technical evaluations (i.e., outside user studies), which nearly all of our participants stated was <em>expected</em> when LLM components are central to contributions. This is a departure from traditional HCI system papers without ML components, where user studies often sufficed to validate system claims.
                 </p>
                 <p style="margin-bottom: 20pt;">
-                    <strong>The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines.</strong> Papers reporting systems where LLMs are peripheral features (e.g., simple summary buttons) need not follow all guidelines with equal rigor. The sensitivity of the topic also mediates rigor (e.g., health). In what follows, we break down these guidelines in more detail.
+                    <strong>The centrality of the LLM component(s) to author claims dictates the "weight" of these guidelines.</strong> Papers reporting systems where LLMs are peripheral features (e.g., simple summary buttons) need not follow all guidelines with equal rigor. The sensitivity of the topic also mediates rigor (e.g., health).
                 </p>
             </div>
 
@@ -446,7 +512,7 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
                         Many participants and senior researchers emphasized this guideline. 
                         I also take this recommendation to mean authors should situate their work inside a broader landscape and history of technical approaches to the problem at hand. "AI" isn't a magic word that magically sets a system apart from all prior art. While it would be impractical to expect authors to compare their LLM approach to every possible alternative, authors should at least acknowledge prior approaches and explain why an LLM is a suitable choice for their specific use case.
                     </div>
@@ -468,8 +534,8 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
-                        Very surprising guideline, but makes sense. At UIST 2025, over 1 in 3 papers reported an LLM-integrated system. At this point, noting a system is "LLM-based" and "AI-powered" is simply redundant: it's increasingly <i>expected</i> that systems will at some point query an LLM. Papers that overemphasize AI/LLMs when they are not central can also come across as trying too hard to ride AI hype, which can backfire with reviewers.
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
+                        At UIST 2025, over 1 in 3 papers reported an LLM-integrated system. At this point, noting a system is "LLM-based" and "AI-powered" is simply redundant: it's increasingly <i>expected</i> that systems will at some point query an LLM. Papers that overemphasize AI/LLMs when they are not central can also come across as trying too hard to ride AI hype, which can backfire with reviewers. Today, it's rarely surprising or interesting that "LLMs can help address X problem."
                     </div>
                 </div>
             </div>
@@ -485,7 +551,7 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
                         This is also a note about paper framing. While you <i>can</i> claim a technical contribution in LLM-integrated work, in my experience that is not an effective strategy, since the spectre of "LLMs will get better soon" looms in reviewers' minds. Researchers tolds us they framed their systems as "probes" instead, or prototypes of novel interaction paradigms—deliberately avoiding claims of technical novelty. 
                     </div>
                 </div>
@@ -512,8 +578,8 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
-                        Fairly uncontroversial, yet the most commonly violated guideline in my reviewing experience, and easily fixable. One note here is that, we found you don't need to report every single prompt in the system, just the ones that are central to claims. Experienced developers are satisfied with notes that "other prompts were straightforward and used default settings."
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
+                        Fairly uncontroversial, yet the most commonly violated guideline in my reviewing experience, and easily fixable. One note here is that, we found you don't need to report every single prompt in the system, just the ones that are central to claims. Experienced developers are satisfied with notes like "other prompts were straightforward and used default settings."
                     </div>
                 </div>
             </div>
@@ -533,7 +599,7 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
                         Reviewers in our study appreciated some insight into how authors engineered their LLM components—was it "thoughtful"? Or was it slapped together? Including a brief description of the iterative process authors used to refine prompts and system architecture helps reviewers understand the effort behind LLM component design. This also should cause authors to reflect on whether they're adopting iterative design practices and seriously engaging with the LLM's behavior, rather than just throwing something together for a paper.
                     </div>
                 </div>
@@ -553,7 +619,7 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
                         Tricky to get right in limited space, but effective when done well. Reviewers expect to see the "big picture" of how LLM components fit into the overall system architecture, in the main text and not an appendix, but don't want to be overwhelmed with minutiae.
                     </div>
                 </div>
@@ -579,7 +645,7 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
                         This is the biggest difference for authors used to writing traditional HCI system papers without ML components. Reviewers now expect some form of technical evaluation of LLM components, especially when they are central to the claims. We have personally experienced reviewers demanding this (e.g., for our paper ChainBuddy, CHI 2025). In my experience, a small-scale evaluation with 30-100 representative inputs, evaluated with automated metrics or expert ratings, is usually sufficient to satisfy reviewer skepticism and ground performance claims.
                     </div>
                 </div>
@@ -602,9 +668,9 @@
                 </div>
                 <div class="ian-experience">
                     <div class="ian-experience-title">Ian's Comment   </div>
-                    <div class="ian-experience-content">
-                        So many submitted papers don't do this, and it's a big red flag that can sink a paper outright. In papers I have reviewed, authors can make sweeping claims like "our system provides accurate feedback" or "our component understands user intent for XYZ types of users" without any evidence backing their claims. Perhaps the fault is double-barreled: on the one hand, research shows that people tend to over-trust AI, so authors might be prone to this too. On the other, rhetoric around AI has become so hype-laden that authors might adopt similar language without realizing they are no longer on social media. 
-                        Being upfront about limitations and failure modes not only builds trust with reviewers but also demonstrates a mature, humble understanding of technology's capabilities.
+                    <div class="ian-experience-content"><span class="ian-name">Ian:</span>
+                        Being upfront about limitations and failure modes not only builds trust with reviewers but also demonstrates a mature, humble understanding of technology's capabilities. Yet, so many submitted papers aren't upfront about limitations, and it's a big red flag. In papers I have reviewed, authors can make sweeping claims like "our system provides accurate feedback" or "our component understands user intent for XYZ types of users" without any evidence backing their claims. Why are authors so smitten with their systems? Research shows that people tend to over-trust AI, so authors might be prone to this too. Also, rhetoric around AI has become so hype-laden that authors might adopt similar language, influenced by social media. 
+                        
                     </div>
                 </div>
             </div>
@@ -876,10 +942,10 @@
                 If you find these guidelines useful, please cite our paper:
             </p>
             <div style="background-color: white; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 0.9em;">
-                @unpublished{navarro2025reportingllm,<br>
+                @article{navarro2026reportingllm,<br>
                 &nbsp;&nbsp;title={Reporting and Reviewing LLM-Integrated Systems in HCI: Challenges and Recommendations},<br>
                 &nbsp;&nbsp;author={Felix Navarro, Karla and Syriani, Eugene and Arawjo, Ian},<br>
-                &nbsp;&nbsp;year={2025}<br>
+                &nbsp;&nbsp;year={2026}<br>
                 }
             </div>
         </section>
@@ -906,25 +972,11 @@
         </footer>
     </div>
     <script>
-        // Add click functionality to ian-experience sections
+        // Tooltip behavior is handled via CSS hover; keep a minimal stub for future enhancements.
         document.addEventListener('DOMContentLoaded', function() {
-            const ianExperiences = document.querySelectorAll('.ian-experience');
-            
-            ianExperiences.forEach(function(element) {
-                element.addEventListener('click', function(e) {
-                    // Toggle expanded class on click
-                    this.classList.toggle('expanded');
-                    e.stopPropagation();
-                });
-            });
-            
-            // Close expanded sections when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.ian-experience')) {
-                    ianExperiences.forEach(function(element) {
-                        element.classList.remove('expanded');
-                    });
-                }
+            // Ensure no .expanded classes remain if present from older markup
+            document.querySelectorAll('.ian-experience.expanded').forEach(function(el) {
+                el.classList.remove('expanded');
             });
         });
     </script>
