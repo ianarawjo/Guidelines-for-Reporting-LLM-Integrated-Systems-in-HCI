@@ -2,7 +2,7 @@
 
 This repository contains the source for the website "Reporting and Reviewing LLM-Integrated Systems in HCI", which is derived from our paper, "Reporting and Reviewing LLM-Integrated Systems in HCI: Challenges and Considerations," conditionally accepted to CHI 2026.
 
-To view the site, click the GitHub pages link in this repo or visit: [https://ianarawjo.com/guidelines-llm-integrated-systems/](https://ianarawjo.com/guidelines-llm-integrated-systems/)
+To view the site, click the GitHub pages link in this repo or visit: [ianarawjo.github.io/Guidelines-for-Reporting-LLM-Integrated-Systems-in-HCI/](https://ianarawjo.github.io/Guidelines-for-Reporting-LLM-Integrated-Systems-in-HCI/)
 
 ### Feedback and Discussion
 
